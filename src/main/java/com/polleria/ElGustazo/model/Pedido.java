@@ -1,51 +1,37 @@
 package com.polleria.ElGustazo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "pedidos")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String clienteNombre;
+    private String estado; 
 
-    @Column(nullable = false, length = 50)
-    private String tipoServicio; // SALON o DELIVERY
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
-    @Column(nullable = false, length = 30)
-    private String estado; // PENDIENTE, EN_PREPARACION, LISTO, ENTREGADO
-
-    @Column(nullable = false)
-    private LocalDateTime fechaCreacion;
-
-    @PrePersist
-    public void prePersist() {
-        this.fechaCreacion = LocalDateTime.now();
-        if (this.estado == null) {
-            this.estado = "PENDIENTE";
-        }
+    @ManyToOne
+    @JoinColumn(name = "plato_id")
+    private Plato plato;
+    
+    private int cantidad;
+    public String getEstado() {
+        return estado;
     }
 
-    public Pedido() {}
-
-    // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getClienteNombre() { return clienteNombre; }
-    public void setClienteNombre(String clienteNombre) { this.clienteNombre = clienteNombre; }
-
-    public String getTipoServicio() { return tipoServicio; }
-    public void setTipoServicio(String tipoServicio) { this.tipoServicio = tipoServicio; }
-
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-
-    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
-    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

@@ -22,6 +22,10 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
+    public List<Pedido> listarPedidos() {
+        return obtenerTodosLosPedidos();
+    }
+
     public Optional<Pedido> obtenerPedidoPorId(Long id) {
         return pedidoRepository.findById(id);
     }
@@ -30,6 +34,14 @@ public class PedidoService {
     public Pedido guardarPedido(Pedido pedido) {
         pedido.setEstado("PENDIENTE");
         return pedidoRepository.save(pedido);
+    }
+
+    @Transactional
+    public Optional<Pedido> actualizarEstado(Long id, String estado) {
+        return pedidoRepository.findById(id).map(pedido -> {
+            pedido.setEstado(estado);
+            return pedidoRepository.save(pedido);
+        });
     }
 
     @Transactional

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Gustazo | Pedidos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <main class="shell">
+        <header class="topbar">
+            <a class="brand" href="/" aria-label="El Gustazo, inicio"><span class="brand-mark">EG</span><span><strong>El Gustazo</strong><small>pollería &amp; cocina criolla</small></span></a>
+            <div class="live-status"><span></span> Panel de pedidos</div>
+        </header>
+        <section class="intro">
+            <div><p class="eyebrow">Turno de atención</p><h1>Que empiece<br><em>el gustazo.</em></h1><p class="intro-copy">Registra cada pedido y mantén la cocina al día.</p></div>
+            <div class="summary" aria-label="Resumen de pedidos"><span id="order-count">0</span><small>pedidos en el turno</small></div>
+        </section>
+        <section class="workspace">
+            <form id="order-form" class="order-form">
+                <div class="section-heading"><span>01</span><h2>Nuevo pedido</h2></div>
+                <label for="clienteNombre">Nombre del cliente</label>
+                <input id="clienteNombre" name="clienteNombre" type="text" maxlength="100" placeholder="Ej. Jhon Nina" required>
+                <fieldset><legend>Tipo de servicio</legend><div class="service-options">
+                    <label class="service-option"><input type="radio" name="tipoServicio" value="SALON" checked><span><b>En salón</b><small>Para disfrutar aquí</small></span></label>
+                    <label class="service-option"><input type="radio" name="tipoServicio" value="DELIVERY"><span><b>Delivery</b><small>Para llevar a casa</small></span></label>
+                </div></fieldset>
+                <button class="primary-button" type="submit">Registrar pedido <span>↗</span></button>
+                <p id="form-message" class="form-message" role="status"></p>
+            </form>
+            <section class="orders-panel" aria-labelledby="orders-title">
+                <div class="section-heading"><span>02</span><h2 id="orders-title">Pedidos recientes</h2><button id="refresh-button" class="refresh-button" type="button" title="Actualizar pedidos">Actualizar</button></div>
+                <div id="orders-list" class="orders-list"><div class="empty-state">Cargando pedidos...</div></div>
+            </section>
+        </section>
+        <footer><span>EL GUSTAZO</span><span>Atención con sabor · 2026</span></footer>
+    </main>
+    <script src="/js/app.js"></script>
+</body>
+</html>
