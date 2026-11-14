@@ -1,37 +1,49 @@
 package com.polleria.ElGustazo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String estado; 
+    @Column(nullable = false)
+    private LocalDateTime fecha = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @Column(nullable = false, length = 30)
+    private String estado = "PENDIENTE";
+
+    @Column(nullable = false)
+    private Double total = 0.0;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "plato_id")
-    private Plato plato;
-    
-    private int cantidad;
-    public String getEstado() {
-        return estado;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallePedido> detalles = new ArrayList<>();
+
+    public void agregarDetalle(DetallePedido detalle) {
+        detalles.add(detalle);
+        detalle.setPedido(this);
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
+    public Double getTotal() { return total; }
+    public void setTotal(Double total) { this.total = total; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public List<DetallePedido> getDetalles() { return detalles; }
+    public void setDetalles(List<DetallePedido> detalles) { this.detalles = detalles; }
 }
